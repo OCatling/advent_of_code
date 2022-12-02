@@ -10,7 +10,10 @@ def execute_day(day):
     if day == '1':
         return day_1(data)
     if day == '2':
-        return day_2(data)
+        _, part_1_result = day_2(data)
+        data = day_2_part_2(data)
+        _, part_2_result = day_2(data)
+        return part_1_result, part_2_result
 
 
 def day_1(data):
@@ -63,6 +66,17 @@ def day_2_part_2(data: str):
     new_input = ''
     for index, match in enumerate(input_list):
         elf = match[0]
-        result = match[2]
         if elf == 'A':
-
+            match = match.replace('X', 'C')
+            match = match.replace('Y', 'A')
+            match = match.replace('Z', 'B')
+        elif elf == 'B':
+            match = match.replace('X', 'A')
+            match = match.replace('Y', 'B')
+            match = match.replace('Z', 'C')
+        elif elf == 'C':
+            match = match.replace('X', 'B')
+            match = match.replace('Y', 'C')
+            match = match.replace('Z', 'A')
+        new_input += f'{match}\n'
+    return new_input
