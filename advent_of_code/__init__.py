@@ -16,7 +16,7 @@ def get_input(year: str, day: str):
         with open(cached_input_path, 'r') as in_file:
             return in_file.read()
 
-    url = f'{URL}{year}/day/{1}/input'
+    url = f'{URL}{year}/day/{day}/input'
     resp = requests.get(url, cookies={'session': SESSION_ID})
     with open(cached_input_path, 'w') as out_file:
         out_file.write(resp.text)
