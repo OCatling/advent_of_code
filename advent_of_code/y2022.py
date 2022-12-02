@@ -26,7 +26,6 @@ def day_1(data):
 
 
 def day_2(data: str):
-    print(f'data type={type(data)}')
     data = data.replace('A', '1')
     data = data.replace('B', '2')
     data = data.replace('C', '3')
@@ -45,10 +44,25 @@ def day_2(data: str):
         if elf == santa:
             elf += 3
             santa += 3
-        elif elf < santa:
+        elif santa > 1 and elf == santa - 1:
             santa += 6
-
+        elif santa == 1 and elf == 3:
+            santa += 6
+        else:
+            elf += 6
+        #  santa 1 and elf 3 | santa 2 and elf 1 | santa 3 and elf 2
         elf_total += elf
         santa_total += santa
 
     return elf_total, santa_total
+
+
+def day_2_part_2(data: str):
+    data = data.strip()
+    input_list = data.split('\n')
+    new_input = ''
+    for index, match in enumerate(input_list):
+        elf = match[0]
+        result = match[2]
+        if elf == 'A':
+
