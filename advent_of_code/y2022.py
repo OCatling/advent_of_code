@@ -7,6 +7,8 @@ YEAR = '2022'
 
 def execute_day(day):
     data = get_input(YEAR, day)
+    data = data.strip()
+    data = data.split('\n')
     if day == '1':
         return day_1(data)
     if day == '2':
@@ -14,12 +16,13 @@ def execute_day(day):
         data = day_2_part_2(data)
         _, part_2_result = day_2(data)
         return part_1_result, part_2_result
+    if day == '3':
+        return day_3(data)
 
 
-def day_1(data):
-    input_list = data.split('\n')
+def day_1(data: List[str]):
     elf_calorie_totals = [0]
-    for i in input_list:
+    for i in data:
         if not i:
             elf_calorie_totals.append(0)
         else:
@@ -28,19 +31,20 @@ def day_1(data):
     return elf_calorie_totals[0], sum(elf_calorie_totals[0:3])
 
 
-def day_2(data: str):
-    data = data.replace('A', '1')
-    data = data.replace('B', '2')
-    data = data.replace('C', '3')
-    data = data.replace('X', '1')
-    data = data.replace('Y', '2')
-    data = data.replace('Z', '3')
-    data = data.strip()
-    input_list = data.split('\n')
+def day_2(data: List[str]):
+    def sanitize(string: str):
+        string = string.replace('A', '1')
+        string = string.replace('B', '2')
+        string = string.replace('C', '3')
+        string = string.replace('X', '1')
+        string = string.replace('Y', '2')
+        string = string.replace('Z', '3')
+        return string
+    data = [sanitize(i) for i in data]
 
     elf_total = 0
     santa_total = 0
-    for match in input_list:
+    for match in data:
         elf = int(match[0])
         santa = int(match[2])
 
@@ -53,18 +57,15 @@ def day_2(data: str):
             santa += 6
         else:
             elf += 6
-        #  santa 1 and elf 3 | santa 2 and elf 1 | santa 3 and elf 2
         elf_total += elf
         santa_total += santa
 
     return elf_total, santa_total
 
 
-def day_2_part_2(data: str):
-    data = data.strip()
-    input_list = data.split('\n')
-    new_input = ''
-    for index, match in enumerate(input_list):
+def day_2_part_2(data: List[str]):
+    new_input = []
+    for match in data:
         elf = match[0]
         if elf == 'A':
             match = match.replace('X', 'C')
@@ -78,5 +79,9 @@ def day_2_part_2(data: str):
             match = match.replace('X', 'B')
             match = match.replace('Y', 'C')
             match = match.replace('Z', 'A')
-        new_input += f'{match}\n'
+        new_input.append(f'{match}\n')
     return new_input
+
+
+def day_3(data: str):
+    return None
