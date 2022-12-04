@@ -83,5 +83,24 @@ def day_2_part_2(data: List[str]):
     return new_input
 
 
-def day_3(data: str):
-    return None
+def day_3(data: List[str]):
+    import string
+
+    def sanitize(input_string: str):
+        letters = list(string.ascii_lowercase + string.ascii_uppercase)
+        for index, letter in enumerate(letters):
+            input_string = input_string.replace(letter, f'{index + 1},')
+        input_string = input_string[:-1]
+        return input_string
+    data = [sanitize(i) for i in data]
+
+    total = 0
+    for backpack in data:
+        backpack = backpack.strip()
+        backpack = backpack.split(',')
+        backpack = [int(i) for i in backpack]
+        first_compartment = sorted(backpack[len(backpack) // 2:])
+        second_compartment = sorted(backpack[:len(backpack) // 2])
+        main_item = set(first_compartment) & set(second_compartment)
+        total += main_item.pop()
+    return total, None
